@@ -8,6 +8,8 @@
 #include "product.h"
 #include "db_parser.h"
 #include "product_parser.h"
+#include "db_parser.h"
+#include "mydatastore.h"
 #include "util.h"
 
 using namespace std;
@@ -29,7 +31,7 @@ int main(int argc, char* argv[])
      * Declare your derived DataStore object here replacing
      *  DataStore type to your derived type
      ****************/
-    DataStore ds;
+    MyDataStore ds;
 
 
 
@@ -99,16 +101,43 @@ int main(int argc, char* argv[])
                 }
                 done = true;
             }
-	    /* Add support for other commands here */
+            else if ( cmd == "ADD") {
+								//Taking in the username and hit_result_index as inputs
+              	string username;
+								unsigned int hit_result_index;
+								
+								if (ss>>username>>hit_result_index){  //Checking if the username exists with the helper function I wrote in mydatastore
+											ds.addCart(username, hits[hit_result_index-1]);//I am adding to cart if no error found
+								}
+								else{ 
+											std::cout<<"Invalid request"<<std::endl;//if the input fails in any, I am giving an error message
+								}
+            }
+            else if ( cmd == "VIEWCART") {
+								string username;
+								if(ss>>username
+										&& ds.usernameMatch(username)){//I am checking whether the username exists
+										ds.viewCart(username);
 
+								}else{
+											std::cout<<"Invalid username"<<std::endl;//if the username is invalid, I am giving an error message									
+								}
+						}
+						else if ( cmd == "BUYCART") {
+								string username;
+								if(ss>>username
+										&& ds.usernameMatch(username)){//Whether the username exists
+										ds.buyCart(username);
 
-
+								}else{
+											std::cout<<"Invalid username"<<std::endl;//if the username is invalid, I am giving an error message									
+								}
+						}
 
             else {
                 cout << "Unknown command" << endl;
             }
         }
-
     }
     return 0;
 }

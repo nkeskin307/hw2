@@ -130,7 +130,9 @@ std::string ProductBookParser::categoryID()
  */
 Product* ProductBookParser::makeProduct()
 {
-
+	//Returns a new derived Book object from base class Product, 
+	//Includes Book specitfic elements isbn_ and author_ 
+	return new Book(categoryID(), prodName_, price_, qty_, isbn_, author_);
 
 }
 
@@ -185,7 +187,9 @@ std::string ProductClothingParser::categoryID()
  */
 Product* ProductClothingParser::makeProduct()
 {
-
+		//Returns a new derived Clothing object from base class Product, 
+		//Includes Clothing specitfic elements size_ and brand_ 
+		return new Clothing(categoryID(), prodName_, price_, qty_, size_, brand_);
 
 
 }
@@ -245,6 +249,8 @@ std::string ProductMovieParser::categoryID()
  */
 Product* ProductMovieParser::makeProduct()
 {
-
+		//Returns a new derived Movie object from base class Product, 
+		//Includes Movie specitfic elements genre_ and rating_ 
+		return new Movie(categoryID(), prodName_, price_, qty_, genre_, rating_);
 
 }
